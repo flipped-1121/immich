@@ -139,6 +139,7 @@ export const getJobName = derived(t, ($t) => {
       [JobName.DuplicateDetection]: $t('admin.machine_learning_duplicate_detection'),
       [JobName.FaceDetection]: $t('admin.face_detection'),
       [JobName.FacialRecognition]: $t('admin.machine_learning_facial_recognition'),
+      [JobName.OCR]: $t('admin.machine_learning_ocr'),
       [JobName.VideoConversion]: $t('admin.video_conversion_job'),
       [JobName.StorageTemplateMigration]: $t('admin.storage_template_migration'),
       [JobName.Migration]: $t('admin.migration_job'),

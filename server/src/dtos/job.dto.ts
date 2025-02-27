@@ -86,6 +86,9 @@ export class AllJobStatusResponseDto implements Record<QueueName, JobStatusDto> 
   [QueueName.FACE_DETECTION]!: JobStatusDto;
 
   @ApiProperty({ type: JobStatusDto })
+  [QueueName.OCR]!: JobStatusDto;
+
+  @ApiProperty({ type: JobStatusDto })
   [QueueName.FACIAL_RECOGNITION]!: JobStatusDto;
 
   @ApiProperty({ type: JobStatusDto })

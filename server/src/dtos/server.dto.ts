@@ -154,6 +154,7 @@ export class ServerFeaturesDto {
   duplicateDetection!: boolean;
   configFile!: boolean;
   facialRecognition!: boolean;
+  ocr!: boolean;
   map!: boolean;
   trash!: boolean;
   reverseGeocoding!: boolean;

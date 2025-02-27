@@ -52,6 +52,7 @@ export enum WithoutProperty {
   DUPLICATE = 'duplicate',
   FACES = 'faces',
   SIDECAR = 'sidecar',
+  OCR = 'ocr',
 }
 
 export enum WithProperty {
@@ -592,6 +593,14 @@ export class AssetRepository {
           .where('job_status.previewAt', 'is not', null)
           .where('job_status.facesRecognizedAt', 'is', null)
           .where('assets.isVisible', '=', true),
+      )
+      .$if(property === WithoutProperty.OCR, (qb) =>
+        qb
+          .innerJoin('asset_job_status as job_status', 'assets.id', 'job_status.assetId')
+          .where('assets.isVisible', '=', true)
+          .where((eb) =>
+            eb.not((eb) => eb.exists(eb.selectFrom('asset_ocr').whereRef('assetId', '=', 'assets.id'))),
+          ),
       )
       .$if(property === WithoutProperty.SIDECAR, (qb) =>
         qb

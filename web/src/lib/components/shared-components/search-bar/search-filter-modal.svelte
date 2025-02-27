@@ -6,7 +6,7 @@
 
   export type SearchFilter = {
     query: string;
-    queryType: 'smart' | 'metadata' | 'description';
+    queryType: 'smart' | 'metadata' | 'description' | 'ocr';
     personIds: SvelteSet<string>;
     tagIds: SvelteSet<string>;
     location: SearchLocationFilter;
@@ -19,7 +19,7 @@
 
 <script lang="ts">
   import { Button } from '@immich/ui';
-  import { AssetTypeEnum, type SmartSearchDto, type MetadataSearchDto } from '@immich/sdk';
+  import { AssetTypeEnum, type SmartSearchDto, type MetadataSearchDto, type OcrSearchDto } from '@immich/sdk';
   import SearchPeopleSection from './search-people-section.svelte';
   import SearchTagsSection from './search-tags-section.svelte';
   import SearchLocationSection from './search-location-section.svelte';
@@ -36,9 +36,9 @@
   import { SvelteSet } from 'svelte/reactivity';
 
   interface Props {
-    searchQuery: MetadataSearchDto | SmartSearchDto;
+    searchQuery: MetadataSearchDto | SmartSearchDto | OcrSearchDto;
     onClose: () => void;
-    onSearch: (search: SmartSearchDto | MetadataSearchDto) => void;
+    onSearch: (search: SmartSearchDto | MetadataSearchDto | OcrSearchDto) => void;
   }
 
   let { searchQuery, onClose, onSearch }: Props = $props();
@@ -54,7 +54,7 @@
 
   let filter: SearchFilter = $state({
     query: 'query' in searchQuery ? searchQuery.query : searchQuery.originalFileName || '',
-    queryType: 'query' in searchQuery ? 'smart' : 'metadata',
+    queryType: 'ocr' in searchQuery ? 'ocr' : 'metadata' in searchQuery ? 'metadata' : 'smart',
     personIds: new SvelteSet('personIds' in searchQuery ? searchQuery.personIds : []),
     tagIds: new SvelteSet('tagIds' in searchQuery ? searchQuery.tagIds : []),
     location: {
@@ -107,10 +107,11 @@
 
     const query = filter.query || undefined;
 
-    let payload: SmartSearchDto | MetadataSearchDto = {
+    let payload: SmartSearchDto | MetadataSearchDto | OcrSearchDto = {
       query: filter.queryType === 'smart' ? query : undefined,
       originalFileName: filter.queryType === 'metadata' ? query : undefined,
       description: filter.queryType === 'description' ? query : undefined,
+      ocr: filter.queryType === 'ocr' ? query : undefined,
       country: filter.location.country,
       state: filter.location.state,
       city: filter.location.city,

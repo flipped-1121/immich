@@ -68,6 +68,11 @@ export interface SystemConfig {
       minFaces: number;
       maxDistance: number;
     };
+    ocr: {
+      enabled: boolean;
+      modelName: string;
+      minScore: number;
+    };
   };
   map: {
     enabled: boolean;
@@ -199,6 +204,7 @@ export const defaults = Object.freeze<SystemConfig>({
     [QueueName.SMART_SEARCH]: { concurrency: 2 },
     [QueueName.METADATA_EXTRACTION]: { concurrency: 5 },
     [QueueName.FACE_DETECTION]: { concurrency: 2 },
+    [QueueName.OCR]: { concurrency: 2 },
     [QueueName.SEARCH]: { concurrency: 5 },
     [QueueName.SIDECAR]: { concurrency: 5 },
     [QueueName.LIBRARY]: { concurrency: 5 },
@@ -228,6 +234,11 @@ export const defaults = Object.freeze<SystemConfig>({
       minScore: 0.7,
       maxDistance: 0.5,
       minFaces: 3,
+    },
+    ocr: {
+      enabled: true,
+      modelName: 'paddle',
+      minScore: 0.9,
     },
   },
   map: {

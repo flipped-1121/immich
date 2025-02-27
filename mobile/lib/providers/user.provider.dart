@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:immich_mobile/domain/models/store.model.dart';
 import 'package:immich_mobile/entities/store.entity.dart';
 import 'package:immich_mobile/entities/user.entity.dart';
 import 'package:immich_mobile/providers/api.provider.dart';
@@ -24,7 +23,7 @@ class CurrentUserProvider extends StateNotifier<User?> {
       final user = await _apiService.usersApi.getMyUser();
       final userPreferences = await _apiService.usersApi.getMyPreferences();
       if (user != null) {
-        await Store.put(
+        Store.put(
           StoreKey.currentUser,
           User.fromUserDto(user, userPreferences),
         );

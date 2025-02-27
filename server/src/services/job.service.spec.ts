@@ -44,6 +44,7 @@ describe(JobService.name, () => {
         { name: JobName.CLEAN_OLD_AUDIT_LOGS },
         { name: JobName.USER_SYNC_USAGE },
         { name: JobName.QUEUE_FACIAL_RECOGNITION, data: { force: false, nightly: true } },
+        { name: JobName.QUEUE_OCR, data: { force: false, nightly: true } },
         { name: JobName.CLEAN_OLD_SESSION_TOKENS },
       ]);
     });
@@ -91,6 +92,7 @@ describe(JobService.name, () => {
         [QueueName.VIDEO_CONVERSION]: expectedJobStatus,
         [QueueName.FACE_DETECTION]: expectedJobStatus,
         [QueueName.FACIAL_RECOGNITION]: expectedJobStatus,
+        [QueueName.OCR]: expectedJobStatus,
         [QueueName.SIDECAR]: expectedJobStatus,
         [QueueName.LIBRARY]: expectedJobStatus,
         [QueueName.NOTIFICATION]: expectedJobStatus,
@@ -191,6 +193,12 @@ describe(JobService.name, () => {
       await sut.handleCommand(QueueName.FACIAL_RECOGNITION, { command: JobCommand.START, force: false });
 
       expect(mocks.job.queue).toHaveBeenCalledWith({ name: JobName.QUEUE_FACIAL_RECOGNITION, data: { force: false } });
+    });
+
+    it('should handle a start ocr command', async () => {
+      mocks.job.getQueueStatus.mockResolvedValue({ isActive: false, isPaused: false });
+
+      await sut.handleCommand(QueueName.OCR, { command: JobCommand.START, force: false });
     });
 
     it('should throw a bad request when an invalid queue is used', async () => {

@@ -63,6 +63,16 @@ _INSIGHTFACE_MODELS = {
 }
 
 
+_PADDLE_MODELS = {
+    "paddle",
+}
+
+
+_TESSERACT_MODELS = {
+    "tesseract",
+}
+
+
 SUPPORTED_PROVIDERS = ["CUDAExecutionProvider", "OpenVINOExecutionProvider", "CPUExecutionProvider"]
 
 
@@ -77,5 +87,11 @@ def get_model_source(model_name: str) -> ModelSource | None:
 
     if cleaned_name in _OPENCLIP_MODELS:
         return ModelSource.OPENCLIP
+
+    if cleaned_name in _PADDLE_MODELS:
+        return ModelSource.PADDLE
+
+    if cleaned_name in _TESSERACT_MODELS:
+        return ModelSource.TESSERACT
 
     return None

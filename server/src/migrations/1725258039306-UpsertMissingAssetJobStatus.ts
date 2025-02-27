@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class UpsertMissingAssetJobStatus1725258039306 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `INSERT INTO "asset_job_status" ("assetId", "facesRecognizedAt", "metadataExtractedAt", "duplicatesDetectedAt", "previewAt", "thumbnailAt") SELECT "assetId", NULL, NULL, NULL, NULL, NULL FROM "asset_files" f WHERE "f"."path" IS NOT NULL ON CONFLICT DO NOTHING`,
+      `INSERT INTO "asset_job_status" ("assetId", "facesRecognizedAt", "ocrAt", "metadataExtractedAt", "duplicatesDetectedAt", "previewAt", "thumbnailAt") SELECT "assetId", NULL, NULL, NULL, NULL, NULL, NULL FROM "asset_files" f WHERE "f"."path" IS NOT NULL ON CONFLICT DO NOTHING`,
     );
 
     await queryRunner.query(

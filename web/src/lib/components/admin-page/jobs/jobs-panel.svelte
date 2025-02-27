@@ -17,6 +17,7 @@
     mdiLibraryShelves,
     mdiTable,
     mdiTagFaces,
+    mdiOcr,
     mdiVideo,
   } from '@mdi/js';
   import type { Component } from 'svelte';
@@ -124,6 +125,14 @@
       missingText: $t('missing'),
       handleCommand: handleConfirmCommand,
       disabled: !$featureFlags.facialRecognition,
+    },
+    [JobName.OCR]: {
+      icon: mdiOcr,
+      title: $getJobName(JobName.OCR),
+      subtitle: $t('admin.ocr_job_description'),
+      allText: $t('all'),
+      missingText: $t('missing'),
+      disabled: !$featureFlags.ocr,
     },
     [JobName.VideoConversion]: {
       icon: mdiVideo,

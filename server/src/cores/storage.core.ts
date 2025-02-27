@@ -3,7 +3,8 @@ import { dirname, join, resolve } from 'node:path';
 import { APP_MEDIA_LOCATION } from 'src/constants';
 import { AssetEntity } from 'src/entities/asset.entity';
 import { PersonEntity } from 'src/entities/person.entity';
-import { AssetFileType, AssetPathType, ImageFormat, PathType, PersonPathType, StorageFolder } from 'src/enum';
+import { OcrRepository } from 'src/repositories/ocr.repository';
+import { AssetFileType, AssetPathType, ImageFormat, OcrPathType, PathType, PersonPathType, StorageFolder } from 'src/enum';
 import { AssetRepository } from 'src/repositories/asset.repository';
 import { ConfigRepository } from 'src/repositories/config.repository';
 import { CryptoRepository } from 'src/repositories/crypto.repository';
@@ -38,6 +39,7 @@ export class StorageCore {
     private cryptoRepository: CryptoRepository,
     private moveRepository: MoveRepository,
     private personRepository: PersonRepository,
+    private ocrRepository: OcrRepository,
     private storageRepository: StorageRepository,
     private systemMetadataRepository: SystemMetadataRepository,
     private logger: LoggingRepository,
@@ -49,6 +51,7 @@ export class StorageCore {
     cryptoRepository: CryptoRepository,
     moveRepository: MoveRepository,
     personRepository: PersonRepository,
+    ocrRepository: OcrRepository,
     storageRepository: StorageRepository,
     systemMetadataRepository: SystemMetadataRepository,
     logger: LoggingRepository,
@@ -60,6 +63,7 @@ export class StorageCore {
         cryptoRepository,
         moveRepository,
         personRepository,
+        ocrRepository,
         storageRepository,
         systemMetadataRepository,
         logger,

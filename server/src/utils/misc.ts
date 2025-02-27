@@ -90,6 +90,8 @@ export const isSmartSearchEnabled = (machineLearning: SystemConfig['machineLearn
   isMachineLearningEnabled(machineLearning) && machineLearning.clip.enabled;
 export const isFacialRecognitionEnabled = (machineLearning: SystemConfig['machineLearning']) =>
   isMachineLearningEnabled(machineLearning) && machineLearning.facialRecognition.enabled;
+export const isOcrEnabled = (machineLearning: SystemConfig['machineLearning']) =>
+  isMachineLearningEnabled(machineLearning) && machineLearning.ocr.enabled;
 export const isDuplicateDetectionEnabled = (machineLearning: SystemConfig['machineLearning']) =>
   isSmartSearchEnabled(machineLearning) && machineLearning.duplicateDetection.enabled;
 export const isFaceImportEnabled = (metadata: SystemConfig['metadata']) => metadata.faces.import;

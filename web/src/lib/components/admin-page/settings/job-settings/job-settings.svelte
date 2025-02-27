@@ -28,6 +28,7 @@
     JobName.SmartSearch,
     JobName.FaceDetection,
     JobName.FacialRecognition,
+    JobName.OCR,
     JobName.VideoConversion,
     JobName.StorageTemplateMigration,
     JobName.Migration,

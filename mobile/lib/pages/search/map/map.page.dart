@@ -403,7 +403,7 @@ class _MapWithMarker extends StatelessWidget {
                 tiltGesturesEnabled: false,
                 dragEnabled: false,
                 myLocationEnabled: false,
-                attributionButtonPosition: AttributionButtonPosition.TopRight,
+                attributionButtonPosition: AttributionButtonPosition.topRight,
                 rotateGesturesEnabled: false,
               ),
             ),

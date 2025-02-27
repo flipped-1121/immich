@@ -30,6 +30,7 @@
     type MetadataSearchDto,
     type AlbumResponseDto,
     getTagById,
+    searchOcr,
   } from '@immich/sdk';
   import { mdiArrowLeft, mdiDotsVertical, mdiImageOffOutline, mdiPlus, mdiSelectAll } from '@mdi/js';
   import type { Viewport } from '$lib/stores/assets.store';
@@ -152,9 +153,11 @@
 
     try {
       const { albums, assets } =
-        'query' in searchDto && $featureFlags.smartSearch
-          ? await searchSmart({ smartSearchDto: searchDto })
-          : await searchAssets({ metadataSearchDto: searchDto });
+        'ocr' in searchDto
+          ? await searchOcr({ ocrSearchDto: searchDto })
+          : 'query' in searchDto && $featureFlags.smartSearch
+            ? await searchSmart({ smartSearchDto: searchDto })
+            : await searchAssets({ metadataSearchDto: searchDto });
 
       searchResultAlbums.push(...albums.items);
       searchResultAssets.push(...assets.items);

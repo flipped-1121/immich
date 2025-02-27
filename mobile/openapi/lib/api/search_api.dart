@@ -10,7 +10,6 @@
 
 part of openapi.api;
 
-
 class SearchApi {
   SearchApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
@@ -29,7 +28,6 @@ class SearchApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -50,12 +48,13 @@ class SearchApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<AssetResponseDto>') as List)
-        .cast<AssetResponseDto>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<AssetResponseDto>') as List)
+          .cast<AssetResponseDto>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -73,7 +72,6 @@ class SearchApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -94,12 +92,13 @@ class SearchApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<SearchExploreResponseDto>') as List)
-        .cast<SearchExploreResponseDto>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<SearchExploreResponseDto>') as List)
+          .cast<SearchExploreResponseDto>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -119,7 +118,14 @@ class SearchApi {
   /// * [String] model:
   ///
   /// * [String] state:
-  Future<Response> getSearchSuggestionsWithHttpInfo(SearchSuggestionType type, { String? country, bool? includeNull, String? make, String? model, String? state, }) async {
+  Future<Response> getSearchSuggestionsWithHttpInfo(
+    SearchSuggestionType type, {
+    String? country,
+    bool? includeNull,
+    String? make,
+    String? model,
+    String? state,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/search/suggestions';
 
@@ -145,10 +151,9 @@ class SearchApi {
     if (state != null) {
       queryParams.addAll(_queryParams('', 'state', state));
     }
-      queryParams.addAll(_queryParams('', 'type', type));
+    queryParams.addAll(_queryParams('', 'type', type));
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -175,20 +180,35 @@ class SearchApi {
   /// * [String] model:
   ///
   /// * [String] state:
-  Future<List<String>?> getSearchSuggestions(SearchSuggestionType type, { String? country, bool? includeNull, String? make, String? model, String? state, }) async {
-    final response = await getSearchSuggestionsWithHttpInfo(type,  country: country, includeNull: includeNull, make: make, model: model, state: state, );
+  Future<List<String>?> getSearchSuggestions(
+    SearchSuggestionType type, {
+    String? country,
+    bool? includeNull,
+    String? make,
+    String? model,
+    String? state,
+  }) async {
+    final response = await getSearchSuggestionsWithHttpInfo(
+      type,
+      country: country,
+      includeNull: includeNull,
+      make: make,
+      model: model,
+      state: state,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<String>') as List)
-        .cast<String>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(responseBody, 'List<String>')
+              as List)
+          .cast<String>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -197,7 +217,9 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [MetadataSearchDto] metadataSearchDto (required):
-  Future<Response> searchAssetsWithHttpInfo(MetadataSearchDto metadataSearchDto,) async {
+  Future<Response> searchAssetsWithHttpInfo(
+    MetadataSearchDto metadataSearchDto,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/search/metadata';
 
@@ -210,7 +232,6 @@ class SearchApi {
 
     const contentTypes = <String>['application/json'];
 
-
     return apiClient.invokeAPI(
       path,
       'POST',
@@ -225,17 +246,24 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [MetadataSearchDto] metadataSearchDto (required):
-  Future<SearchResponseDto?> searchAssets(MetadataSearchDto metadataSearchDto,) async {
-    final response = await searchAssetsWithHttpInfo(metadataSearchDto,);
+  Future<SearchResponseDto?> searchAssets(
+    MetadataSearchDto metadataSearchDto,
+  ) async {
+    final response = await searchAssetsWithHttpInfo(
+      metadataSearchDto,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'SearchResponseDto',) as SearchResponseDto;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'SearchResponseDto',
+      ) as SearchResponseDto;
     }
     return null;
   }
@@ -246,7 +274,10 @@ class SearchApi {
   /// * [String] name (required):
   ///
   /// * [bool] withHidden:
-  Future<Response> searchPersonWithHttpInfo(String name, { bool? withHidden, }) async {
+  Future<Response> searchPersonWithHttpInfo(
+    String name, {
+    bool? withHidden,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/search/person';
 
@@ -257,13 +288,12 @@ class SearchApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'name', name));
+    queryParams.addAll(_queryParams('', 'name', name));
     if (withHidden != null) {
       queryParams.addAll(_queryParams('', 'withHidden', withHidden));
     }
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -281,20 +311,27 @@ class SearchApi {
   /// * [String] name (required):
   ///
   /// * [bool] withHidden:
-  Future<List<PersonResponseDto>?> searchPerson(String name, { bool? withHidden, }) async {
-    final response = await searchPersonWithHttpInfo(name,  withHidden: withHidden, );
+  Future<List<PersonResponseDto>?> searchPerson(
+    String name, {
+    bool? withHidden,
+  }) async {
+    final response = await searchPersonWithHttpInfo(
+      name,
+      withHidden: withHidden,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<PersonResponseDto>') as List)
-        .cast<PersonResponseDto>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<PersonResponseDto>') as List)
+          .cast<PersonResponseDto>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -303,7 +340,9 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [String] name (required):
-  Future<Response> searchPlacesWithHttpInfo(String name,) async {
+  Future<Response> searchPlacesWithHttpInfo(
+    String name,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/search/places';
 
@@ -314,10 +353,9 @@ class SearchApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'name', name));
+    queryParams.addAll(_queryParams('', 'name', name));
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -333,20 +371,25 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [String] name (required):
-  Future<List<PlacesResponseDto>?> searchPlaces(String name,) async {
-    final response = await searchPlacesWithHttpInfo(name,);
+  Future<List<PlacesResponseDto>?> searchPlaces(
+    String name,
+  ) async {
+    final response = await searchPlacesWithHttpInfo(
+      name,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<PlacesResponseDto>') as List)
-        .cast<PlacesResponseDto>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<PlacesResponseDto>') as List)
+          .cast<PlacesResponseDto>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -355,7 +398,9 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [RandomSearchDto] randomSearchDto (required):
-  Future<Response> searchRandomWithHttpInfo(RandomSearchDto randomSearchDto,) async {
+  Future<Response> searchRandomWithHttpInfo(
+    RandomSearchDto randomSearchDto,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/search/random';
 
@@ -368,7 +413,6 @@ class SearchApi {
 
     const contentTypes = <String>['application/json'];
 
-
     return apiClient.invokeAPI(
       path,
       'POST',
@@ -383,20 +427,25 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [RandomSearchDto] randomSearchDto (required):
-  Future<List<AssetResponseDto>?> searchRandom(RandomSearchDto randomSearchDto,) async {
-    final response = await searchRandomWithHttpInfo(randomSearchDto,);
+  Future<List<AssetResponseDto>?> searchRandom(
+    RandomSearchDto randomSearchDto,
+  ) async {
+    final response = await searchRandomWithHttpInfo(
+      randomSearchDto,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<AssetResponseDto>') as List)
-        .cast<AssetResponseDto>()
-        .toList(growable: false);
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<AssetResponseDto>') as List)
+          .cast<AssetResponseDto>()
+          .toList(growable: false);
     }
     return null;
   }
@@ -405,7 +454,9 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [SmartSearchDto] smartSearchDto (required):
-  Future<Response> searchSmartWithHttpInfo(SmartSearchDto smartSearchDto,) async {
+  Future<Response> searchSmartWithHttpInfo(
+    SmartSearchDto smartSearchDto,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/search/smart';
 
@@ -417,7 +468,6 @@ class SearchApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>['application/json'];
-
 
     return apiClient.invokeAPI(
       path,
@@ -433,17 +483,79 @@ class SearchApi {
   /// Parameters:
   ///
   /// * [SmartSearchDto] smartSearchDto (required):
-  Future<SearchResponseDto?> searchSmart(SmartSearchDto smartSearchDto,) async {
-    final response = await searchSmartWithHttpInfo(smartSearchDto,);
+  Future<SearchResponseDto?> searchSmart(
+    SmartSearchDto smartSearchDto,
+  ) async {
+    final response = await searchSmartWithHttpInfo(
+      smartSearchDto,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'SearchResponseDto',) as SearchResponseDto;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'SearchResponseDto',
+      ) as SearchResponseDto;
+    }
+    return null;
+  }
+
+  /// Performs an HTTP 'POST /search/ocr' operation and returns the [Response].
+  /// Parameters:
+  ///
+  /// * [OcrSearchDto] ocrSearchDto (required):
+  Future<Response> searchOcrWithHttpInfo(
+    OcrSearchDto ocrSearchDto,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/search/ocr';
+
+    // ignore: prefer_final_locals
+    Object? postBody = ocrSearchDto;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Parameters:
+  ///
+  /// * [OcrSearchDto] ocrSearchDto (required):
+  Future<SearchResponseDto?> searchOcr(
+    OcrSearchDto ocrSearchDto,
+  ) async {
+    final response = await searchOcrWithHttpInfo(
+      ocrSearchDto,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'SearchResponseDto',
+      ) as SearchResponseDto;
     }
     return null;
   }

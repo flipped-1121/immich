@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:immich_mobile/domain/models/store.model.dart';
 import 'package:immich_mobile/entities/store.entity.dart';
-import 'package:immich_mobile/entities/user.entity.dart';
-import 'package:immich_mobile/models/auth/auth_state.model.dart';
 import 'package:immich_mobile/models/auth/login_response.model.dart';
+import 'package:immich_mobile/models/auth/auth_state.model.dart';
+import 'package:immich_mobile/entities/user.entity.dart';
 import 'package:immich_mobile/providers/api.provider.dart';
 import 'package:immich_mobile/services/api.service.dart';
 import 'package:immich_mobile/services/auth.service.dart';
@@ -99,7 +98,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<bool> saveAuthInfo({
     required String accessToken,
   }) async {
-    await _apiService.setAccessToken(accessToken);
+    _apiService.setAccessToken(accessToken);
 
     // Get the deviceid from the store if it exists, otherwise generate a new one
     String deviceId =
@@ -142,13 +141,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // If the user information is successfully retrieved, update the store
     // Due to the flow of the code, this will always happen on first login
     if (userResponse != null) {
-      await Store.put(StoreKey.deviceId, deviceId);
-      await Store.put(StoreKey.deviceIdHash, fastHash(deviceId));
-      await Store.put(
+      Store.put(StoreKey.deviceId, deviceId);
+      Store.put(StoreKey.deviceIdHash, fastHash(deviceId));
+      Store.put(
         StoreKey.currentUser,
         User.fromUserDto(userResponse, userPreferences),
       );
-      await Store.put(StoreKey.accessToken, accessToken);
+      Store.put(StoreKey.accessToken, accessToken);
 
       user = User.fromUserDto(userResponse, userPreferences);
     } else {
@@ -174,12 +173,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     return true;
   }
 
-  Future<void> saveWifiName(String wifiName) async {
-    await Store.put(StoreKey.preferredWifiName, wifiName);
+  Future<void> saveWifiName(String wifiName) {
+    return Store.put(StoreKey.preferredWifiName, wifiName);
   }
 
-  Future<void> saveLocalEndpoint(String url) async {
-    await Store.put(StoreKey.localEndpoint, url);
+  Future<void> saveLocalEndpoint(String url) {
+    return Store.put(StoreKey.localEndpoint, url);
   }
 
   String? getSavedWifiName() {

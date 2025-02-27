@@ -8,6 +8,7 @@ import {
   PlacesResponseDto,
   RandomSearchDto,
   SearchExploreResponseDto,
+  OcrSearchDto,
   SearchPeopleDto,
   SearchPlacesDto,
   SearchResponseDto,
@@ -27,6 +28,13 @@ export class SearchController {
   @Authenticated()
   searchAssets(@Auth() auth: AuthDto, @Body() dto: MetadataSearchDto): Promise<SearchResponseDto> {
     return this.service.searchMetadata(auth, dto);
+  }
+
+  @Post('ocr')
+  @HttpCode(HttpStatus.OK)
+  @Authenticated()
+  searchOcr(@Auth() auth: AuthDto, @Body() dto: OcrSearchDto): Promise<SearchResponseDto> {
+    return this.service.searchOcr(auth, dto);
   }
 
   @Post('random')

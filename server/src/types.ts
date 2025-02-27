@@ -316,6 +316,11 @@ export type JobItem =
   | { name: JobName.FACIAL_RECOGNITION; data: IDeferrableJob }
   | { name: JobName.GENERATE_PERSON_THUMBNAIL; data: IEntityJob }
 
+  // OCR
+  | { name: JobName.QUEUE_OCR; data: INightlyJob }
+  | { name: JobName.OCR; data: IEntityJob }
+  | { name: JobName.OCR_CLEANUP; data?: IBaseJob }
+
   // Smart Search
   | { name: JobName.QUEUE_SMART_SEARCH; data: IBaseJob }
   | { name: JobName.SMART_SEARCH; data: IEntityJob }

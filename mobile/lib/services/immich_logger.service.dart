@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:immich_mobile/domain/models/store.model.dart';
 import 'package:immich_mobile/entities/logger_message.entity.dart';
 import 'package:immich_mobile/entities/store.entity.dart';
 import 'package:isar/isar.dart';

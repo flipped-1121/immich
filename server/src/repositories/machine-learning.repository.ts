@@ -12,11 +12,13 @@ export interface BoundingBox {
 
 export enum ModelTask {
   FACIAL_RECOGNITION = 'facial-recognition',
+  OCR = 'ocr',
   SEARCH = 'clip',
 }
 
 export enum ModelType {
   DETECTION = 'detection',
+  OCR = 'ocr',
   PIPELINE = 'pipeline',
   RECOGNITION = 'recognition',
   TEXTUAL = 'textual',
@@ -28,6 +30,7 @@ export type ModelPayload = { imagePath: string } | { text: string };
 type ModelOptions = { modelName: string };
 
 export type FaceDetectionOptions = ModelOptions & { minScore: number };
+export type OcrOptions = ModelOptions & { minScore: number };
 
 type VisualResponse = { imageHeight: number; imageWidth: number };
 export type ClipVisualRequest = { [ModelTask.SEARCH]: { [ModelType.VISUAL]: ModelOptions } };
@@ -43,15 +46,23 @@ export type FacialRecognitionRequest = {
   };
 };
 
+export type OcrRequest = { [ModelTask.OCR]: { [ModelType.OCR]: ModelOptions & { options: { minScore: number } } } };
+
 export interface Face {
   boundingBox: BoundingBox;
   embedding: string;
   score: number;
 }
 
+export type OCR = {
+  text: string;
+  confidence: number;
+};
+
 export type FacialRecognitionResponse = { [ModelTask.FACIAL_RECOGNITION]: Face[] } & VisualResponse;
+export type OcrResponse = { [ModelTask.OCR]: OCR } & VisualResponse;
 export type DetectedFaces = { faces: Face[] } & VisualResponse;
-export type MachineLearningRequest = ClipVisualRequest | ClipTextualRequest | FacialRecognitionRequest;
+export type MachineLearningRequest = ClipVisualRequest | ClipTextualRequest | FacialRecognitionRequest | OcrRequest;
 
 @Injectable()
 export class MachineLearningRepository {
@@ -94,6 +105,12 @@ export class MachineLearningRepository {
       imageWidth: response.imageWidth,
       faces: response[ModelTask.FACIAL_RECOGNITION],
     };
+  }
+
+  async ocr(urls: string[], imagePath: string, { modelName, minScore }: OcrOptions) {
+    const request = { [ModelTask.OCR]: { [ModelType.OCR]: { modelName, options: { minScore } } } };
+    const response = await this.predict<OcrResponse>(urls, { imagePath }, request);
+    return response[ModelTask.OCR];
   }
 
   async encodeImage(urls: string[], imagePath: string, { modelName }: CLIPConfig) {

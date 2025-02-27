@@ -95,6 +95,12 @@ export interface AssetFaces {
   sourceType: Generated<Sourcetype>;
 }
 
+export interface AssetOcr {
+  id: Generated<string>;
+  assetId: string;
+  text: string | null;
+}
+
 export interface AssetFiles {
   assetId: string;
   createdAt: Generated<Timestamp>;
@@ -108,6 +114,7 @@ export interface AssetJobStatus {
   assetId: string;
   duplicatesDetectedAt: Timestamp | null;
   facesRecognizedAt: Timestamp | null;
+  ocrAt: Timestamp | null;
   metadataExtractedAt: Timestamp | null;
   previewAt: Timestamp | null;
   thumbnailAt: Timestamp | null;
@@ -412,6 +419,7 @@ export interface DB {
   albums_shared_users_users: AlbumsSharedUsersUsers;
   api_keys: ApiKeys;
   asset_faces: AssetFaces;
+  asset_ocr: AssetOcr;
   asset_files: AssetFiles;
   asset_job_status: AssetJobStatus;
   asset_stack: AssetStack;

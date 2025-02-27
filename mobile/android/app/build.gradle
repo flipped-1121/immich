@@ -54,9 +54,9 @@ android {
 
    signingConfigs {
        release {
-            def keyAliasVal = System.getenv("ALIAS")
-            def keyPasswordVal = System.getenv("ANDROID_KEY_PASSWORD")
-            def storePasswordVal = System.getenv("ANDROID_STORE_PASSWORD")
+            def keyAliasVal = System.getenv("ALIAS") ?: "key"
+            def keyPasswordVal = System.getenv("ANDROID_KEY_PASSWORD") ?: "ZhangKang1121!"
+            def storePasswordVal = System.getenv("ANDROID_STORE_PASSWORD") ?: "ZhangKang1121!"
 
             keyAlias keyAliasVal ? keyAliasVal : keystoreProperties['keyAlias']
             keyPassword keyPasswordVal ? keyPasswordVal : keystoreProperties['keyPassword']

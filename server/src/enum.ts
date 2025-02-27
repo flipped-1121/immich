@@ -187,6 +187,7 @@ export enum StorageFolder {
 export enum SystemMetadataKey {
   REVERSE_GEOCODING_STATE = 'reverse-geocoding-state',
   FACIAL_RECOGNITION_STATE = 'facial-recognition-state',
+  OCR_STATE = 'ocr-state',
   ADMIN_ONBOARDING = 'admin-onboarding',
   SYSTEM_CONFIG = 'system-config',
   SYSTEM_FLAGS = 'system-flags',
@@ -247,11 +248,15 @@ export enum PersonPathType {
   FACE = 'face',
 }
 
+export enum OcrPathType {
+  OCR = 'ocr',
+}
+
 export enum UserPathType {
   PROFILE = 'profile',
 }
 
-export type PathType = AssetPathType | PersonPathType | UserPathType;
+export type PathType = AssetPathType | PersonPathType | UserPathType | OcrPathType;
 
 export enum TranscodePolicy {
   ALL = 'all',
@@ -405,6 +410,7 @@ export enum QueueName {
   VIDEO_CONVERSION = 'videoConversion',
   FACE_DETECTION = 'faceDetection',
   FACIAL_RECOGNITION = 'facialRecognition',
+  OCR = 'ocr',
   SMART_SEARCH = 'smartSearch',
   DUPLICATE_DETECTION = 'duplicateDetection',
   BACKGROUND_TASK = 'backgroundTask',
@@ -462,6 +468,11 @@ export enum JobName {
   FACE_DETECTION = 'face-detection',
   QUEUE_FACIAL_RECOGNITION = 'queue-facial-recognition',
   FACIAL_RECOGNITION = 'facial-recognition',
+
+  // ocr
+  QUEUE_OCR = 'queue-ocr',
+  OCR = 'ocr',
+  OCR_CLEANUP = 'ocr-cleanup',
 
   // library management
   LIBRARY_QUEUE_SYNC_FILES = 'library-queue-sync-files',

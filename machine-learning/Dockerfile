@@ -31,7 +31,8 @@ RUN poetry config installer.max-workers 10 && \
     poetry config virtualenvs.create false
 RUN python3 -m venv /opt/venv
 
-COPY poetry.lock pyproject.toml ./
+# COPY poetry.lock ./
+COPY pyproject.toml ./
 RUN poetry install --sync --no-interaction --no-ansi --no-root --with ${DEVICE} --without dev
 
 FROM python:3.11-slim-bookworm@sha256:42420f737ba91d509fc60d5ed65ed0492678a90c561e1fa08786ae8ba8b52eda AS prod-cpu
@@ -84,7 +85,8 @@ FROM prod-${DEVICE} AS prod
 ARG DEVICE
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends tini $(if ! [ "$DEVICE" = "openvino" ]; then echo "libmimalloc2.0"; fi) && \
+    # apt-get install -y --no-install-recommends tini libgl1-mesa-glx libglib2.0-dev $(if ! [ "$DEVICE" = "openvino" ]; then echo "libmimalloc2.0"; fi) && \
+    apt-get install -y --no-install-recommends tini ccache ffmpeg $(if ! [ "$DEVICE" = "openvino" ]; then echo "libmimalloc2.0"; fi) && \
     apt-get autoremove -yqq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

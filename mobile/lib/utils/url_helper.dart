@@ -1,4 +1,3 @@
-import 'package:immich_mobile/domain/models/store.model.dart';
 import 'package:immich_mobile/entities/store.entity.dart';
 
 String sanitizeUrl(String url) {

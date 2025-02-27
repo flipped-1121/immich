@@ -178,6 +178,11 @@ export interface FaceSearchResult {
   personId: string | null;
 }
 
+export interface SearchOcrOptions {
+  text: string;
+  userIds: string[];
+}
+
 export interface AssetDuplicateResult {
   assetId: string;
   duplicateId: string | null;
@@ -273,7 +278,7 @@ export class SearchRepository {
       },
     ],
   })
-  async searchSmart(pagination: SearchPaginationOptions, options: SmartSearchOptions): Paginated<AssetEntity> {
+ async  searchSmart(pagination: SearchPaginationOptions, options: SmartSearchOptions): Paginated<AssetEntity> {
     if (!isValidInteger(pagination.size, { min: 1, max: 1000 })) {
       throw new Error(`Invalid value for 'size': ${pagination.size}`);
     }
@@ -362,6 +367,31 @@ export class SearchRepository {
       .selectAll()
       .where('cte.distance', '<=', maxDistance)
       .execute();
+  }
+
+  @GenerateSql({
+    params: [
+      {
+        userIds: [DummyValue.UUID],
+        text: DummyValue.STRING,
+        numResults: 10,
+      },
+    ],
+  })
+  async searchOcr(pagination: SearchPaginationOptions, options: SearchOcrOptions) {
+    const items = await this.db
+      .selectFrom('asset_ocr')
+      .selectAll()
+      .innerJoin('assets', 'assets.id', 'asset_ocr.assetId')
+      .where('assets.ownerId', '=', anyUuid(options.userIds))
+      .where('asset_ocr.text', 'ilike', `%${options.text}%`)
+      .limit(pagination.size + 1)
+      .offset((pagination.page - 1) * pagination.size)
+      .execute();
+
+    const hasNextPage = items.length > pagination.size;
+    items.splice(pagination.size);
+    return { items: items as any as AssetEntity[], hasNextPage };
   }
 
   @GenerateSql({ params: [DummyValue.STRING] })

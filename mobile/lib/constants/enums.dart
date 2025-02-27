@@ -7,4 +7,5 @@ enum TextSearchType {
   context,
   filename,
   description,
+  ocr,
 }

@@ -8,6 +8,8 @@ from app.schemas import ModelSource, ModelTask, ModelType
 from .constants import get_model_source
 from .facial_recognition.detection import FaceDetector
 from .facial_recognition.recognition import FaceRecognizer
+from .ocr.paddle import PaddleOCRModel
+from .ocr.tesseract import TesseractModel
 
 
 def get_model_class(model_name: str, model_type: ModelType, model_task: ModelTask) -> type[InferenceModel]:
@@ -27,6 +29,12 @@ def get_model_class(model_name: str, model_type: ModelType, model_task: ModelTas
 
         case ModelSource.INSIGHTFACE, ModelType.RECOGNITION, ModelTask.FACIAL_RECOGNITION:
             return FaceRecognizer
+
+        case ModelSource.PADDLE, ModelType.OCR, ModelTask.OCR:
+            return PaddleOCRModel
+
+        case ModelSource.TESSERACT, ModelType.OCR, ModelTask.OCR:
+            return TesseractModel
 
         case _:
             raise ValueError(f"Unknown model combination: {source}, {model_type}, {model_task}")

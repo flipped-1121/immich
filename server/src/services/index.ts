@@ -18,6 +18,7 @@ import { MediaService } from 'src/services/media.service';
 import { MemoryService } from 'src/services/memory.service';
 import { MetadataService } from 'src/services/metadata.service';
 import { NotificationService } from 'src/services/notification.service';
+import { OcrService } from 'src/services/ocr.service';
 import { PartnerService } from 'src/services/partner.service';
 import { PersonService } from 'src/services/person.service';
 import { SearchService } from 'src/services/search.service';
@@ -60,6 +61,7 @@ export const services = [
   MemoryService,
   MetadataService,
   NotificationService,
+  OcrService,
   PartnerService,
   PersonService,
   SearchService,

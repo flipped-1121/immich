@@ -5,8 +5,9 @@
   import { mdiClose, mdiMagnify, mdiTune } from '@mdi/js';
   import SearchHistoryBox from './search-history-box.svelte';
   import SearchFilterModal from './search-filter-modal.svelte';
-  import type { MetadataSearchDto, SmartSearchDto } from '@immich/sdk';
+  import type { MetadataSearchDto, SmartSearchDto, OcrSearchDto } from '@immich/sdk';
   import { getMetadataSearchQuery } from '$lib/utils/metadata-search';
+  import { getOcrSearchQuery } from '$lib/utils/ocr-search';
   import { handlePromiseError } from '$lib/utils';
   import { shortcuts } from '$lib/actions/shortcut';
   import { focusOutside } from '$lib/actions/focus-outside';
@@ -18,7 +19,7 @@
   interface Props {
     value?: string;
     grayTheme: boolean;
-    searchQuery?: MetadataSearchDto | SmartSearchDto;
+    searchQuery?: MetadataSearchDto | SmartSearchDto | OcrSearchDto;
     onSearch?: () => void;
   }
 
@@ -35,8 +36,13 @@
 
   const listboxId = generateId();
 
-  const handleSearch = async (payload: SmartSearchDto | MetadataSearchDto) => {
-    const params = getMetadataSearchQuery(payload);
+  const handleSearch = async (payload: SmartSearchDto | MetadataSearchDto | OcrSearchDto) => {
+    let params = '';
+    if ('ocr' in payload) {
+      params = getOcrSearchQuery(payload);
+    } else {
+      params = getMetadataSearchQuery(payload);
+    }
 
     closeDropdown();
     showFilter = false;

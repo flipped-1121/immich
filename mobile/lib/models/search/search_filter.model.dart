@@ -236,6 +236,7 @@ class SearchFilter {
   String? context;
   String? filename;
   String? description;
+  String? ocr;
   Set<Person> people;
   SearchLocationFilter location;
   SearchCameraFilter camera;
@@ -249,6 +250,7 @@ class SearchFilter {
     this.context,
     this.filename,
     this.description,
+    this.ocr,
     required this.people,
     required this.location,
     required this.camera,
@@ -261,6 +263,7 @@ class SearchFilter {
     return (context == null || (context != null && context!.isEmpty)) &&
         (filename == null || (filename!.isEmpty)) &&
         (description == null || (description!.isEmpty)) &&
+        (ocr == null || (ocr!.isEmpty)) &&
         people.isEmpty &&
         location.country == null &&
         location.state == null &&
@@ -279,6 +282,7 @@ class SearchFilter {
     String? context,
     String? filename,
     String? description,
+    String? ocr,
     Set<Person>? people,
     SearchLocationFilter? location,
     SearchCameraFilter? camera,
@@ -290,6 +294,7 @@ class SearchFilter {
       context: context ?? this.context,
       filename: filename ?? this.filename,
       description: description ?? this.description,
+      ocr: ocr ?? this.ocr,
       people: people ?? this.people,
       location: location ?? this.location,
       camera: camera ?? this.camera,
@@ -301,7 +306,7 @@ class SearchFilter {
 
   @override
   String toString() {
-    return 'SearchFilter(context: $context, filename: $filename, description: $description, people: $people, location: $location, camera: $camera, date: $date, display: $display, mediaType: $mediaType)';
+    return 'SearchFilter(context: $context, filename: $filename, description: $description, ocr: $ocr, people: $people, location: $location, camera: $camera, date: $date, display: $display, mediaType: $mediaType)';
   }
 
   @override
@@ -311,6 +316,7 @@ class SearchFilter {
     return other.context == context &&
         other.filename == filename &&
         other.description == description &&
+        other.ocr == ocr &&
         other.people == people &&
         other.location == location &&
         other.camera == camera &&
@@ -324,6 +330,7 @@ class SearchFilter {
     return context.hashCode ^
         filename.hashCode ^
         description.hashCode ^
+        ocr.hashCode ^
         people.hashCode ^
         location.hashCode ^
         camera.hashCode ^

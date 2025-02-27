@@ -161,6 +161,10 @@ export class JobService extends BaseService {
         return this.jobRepository.queue({ name: JobName.QUEUE_FACIAL_RECOGNITION, data: { force } });
       }
 
+      case QueueName.OCR: {
+        return this.jobRepository.queue({ name: JobName.QUEUE_OCR, data: { force } });
+      }
+
       case QueueName.LIBRARY: {
         return this.jobRepository.queue({ name: JobName.LIBRARY_QUEUE_SYNC_ALL, data: { force } });
       }
@@ -196,6 +200,7 @@ export class JobService extends BaseService {
   private isConcurrentQueue(name: QueueName): name is ConcurrentQueueName {
     return ![
       QueueName.FACIAL_RECOGNITION,
+      QueueName.OCR,
       QueueName.STORAGE_TEMPLATE_MIGRATION,
       QueueName.DUPLICATE_DETECTION,
       QueueName.BACKUP_DATABASE,
@@ -211,6 +216,7 @@ export class JobService extends BaseService {
       { name: JobName.CLEAN_OLD_AUDIT_LOGS },
       { name: JobName.USER_SYNC_USAGE },
       { name: JobName.QUEUE_FACIAL_RECOGNITION, data: { force: false, nightly: true } },
+      { name: JobName.QUEUE_OCR, data: { force: false, nightly: true } },
       { name: JobName.CLEAN_OLD_SESSION_TOKENS },
     ]);
   }

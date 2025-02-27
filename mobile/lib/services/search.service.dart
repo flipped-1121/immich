@@ -76,6 +76,20 @@ class SearchService {
             size: 1000,
           ),
         );
+      } else if (filter.ocr != null && filter.ocr!.isNotEmpty) {
+        response = await _apiService.searchApi.searchOcr(
+          OcrSearchDto(
+            ocr: filter.ocr!,
+            query: filter.ocr!,
+            isArchived: filter.display.isArchive ? true : null,
+            isFavorite: filter.display.isFavorite ? true : null,
+            isNotInAlbum: filter.display.isNotInAlbum ? true : null,
+            personIds: filter.people.map((e) => e.id).toList(),
+            type: type,
+            page: page,
+            size: 1000,
+          ),
+        );
       } else {
         response = await _apiService.searchApi.searchAssets(
           MetadataSearchDto(

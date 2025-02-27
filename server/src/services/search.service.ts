@@ -13,6 +13,7 @@ import {
   SearchSuggestionRequestDto,
   SearchSuggestionType,
   SmartSearchDto,
+  OcrSearchDto,
 } from 'src/dtos/search.dto';
 import { AssetEntity } from 'src/entities/asset.entity';
 import { AssetOrder } from 'src/enum';
@@ -91,6 +92,18 @@ export class SearchService extends BaseService {
       { ...dto, userIds, embedding },
     );
 
+    return this.mapResponse(items, hasNextPage ? (page + 1).toString() : null, { auth });
+  }
+
+  async searchOcr(auth: AuthDto, dto: OcrSearchDto): Promise<SearchResponseDto> {
+    const userIds = await this.getUserIdsToSearch(auth);
+    const text = dto.ocr;
+    const size = dto.size || 10;
+    const page = dto.page ?? 1;
+    const { hasNextPage, items } = await this.searchRepository.searchOcr(
+      { page, size },
+      { text, userIds },
+    );
     return this.mapResponse(items, hasNextPage ? (page + 1).toString() : null, { auth });
   }
 
