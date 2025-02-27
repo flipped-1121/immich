@@ -561,6 +561,7 @@ export type AllJobStatusResponseDto = {
     duplicateDetection: JobStatusDto;
     faceDetection: JobStatusDto;
     facialRecognition: JobStatusDto;
+    ocr: JobStatusDto;
     library: JobStatusDto;
     metadataExtraction: JobStatusDto;
     migration: JobStatusDto;
@@ -844,6 +845,11 @@ export type MetadataSearchDto = {
     withPeople?: boolean;
     withStacked?: boolean;
 };
+export type OcrSearchDto = {
+    page?: number;
+    size?: number;
+    ocr?: string;
+};
 export type SearchFacetCountResponseDto = {
     count: number;
     value: string;
@@ -986,6 +992,7 @@ export type ServerFeaturesDto = {
     duplicateDetection: boolean;
     email: boolean;
     facialRecognition: boolean;
+    ocr: boolean;
     importFaces: boolean;
     map: boolean;
     oauth: boolean;
@@ -2600,6 +2607,19 @@ export function searchAssets({ metadataSearchDto }: {
         body: metadataSearchDto
     })));
 }
+export function searchOcr({ ocrSearchDto,}: {
+    ocrSearchDto: OcrSearchDto;
+}, opts?: Oazapfts.RequestOpts) {
+    return oazapfts.ok(
+        oazapfts.fetchJson<{
+            status: 200;
+            data: SearchResponseDto;
+        }>('/search/ocr', oazapfts.json({
+            ...opts,
+            method: 'POST',
+            body: ocrSearchDto,
+    })));
+}
 export function searchPerson({ name, withHidden }: {
     name: string;
     withHidden?: boolean;
@@ -3587,6 +3607,7 @@ export enum JobName {
     VideoConversion = "videoConversion",
     FaceDetection = "faceDetection",
     FacialRecognition = "facialRecognition",
+    OCR = 'ocr',
     SmartSearch = "smartSearch",
     DuplicateDetection = "duplicateDetection",
     BackgroundTask = "backgroundTask",
