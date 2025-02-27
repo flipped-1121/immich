@@ -64,4 +64,26 @@ class UserRepository extends DatabaseRepository implements IUserRepository {
       await db.users.clear();
     });
   }
+
+  @override
+  Future<List<int>> getTimelineUserIds(int id) {
+    return db.users
+        .filter()
+        .inTimelineEqualTo(true)
+        .or()
+        .isarIdEqualTo(id)
+        .isarIdProperty()
+        .findAll();
+  }
+
+  @override
+  Stream<List<int>> watchTimelineUsers(int id) {
+    return db.users
+        .filter()
+        .inTimelineEqualTo(true)
+        .or()
+        .isarIdEqualTo(id)
+        .isarIdProperty()
+        .watch();
+  }
 }

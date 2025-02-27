@@ -1,11 +1,11 @@
 name: immich_mobile
 description: Immich - selfhosted backup media file on mobile phone
 
-publish_to: "none"
-version: 1.126.1+184
+publish_to: 'none'
+version: 1.127.0+185
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: '>=3.3.0 <4.0.0'
   flutter: 3.24.5
 
 isar_version: &isar_version 3.1.8 # define the version to be used
@@ -65,7 +65,7 @@ dependencies:
   native_video_player:
     git:
       url: https://github.com/immich-app/native_video_player
-      ref: "4530808"
+      ref: '4530808'
 
   #image editing packages
   crop_image: ^1.0.13
@@ -112,7 +112,7 @@ dev_dependencies:
   riverpod_generator: ^2.3.9
   mocktail: ^1.0.3
   immich_mobile_immich_lint:
-    path: "./immich_lint"
+    path: './immich_lint'
 
 flutter:
   uses-material-design: true
@@ -140,11 +140,11 @@ flutter:
         - asset: fonts/overpass/OverpassMono.ttf
 
 flutter_launcher_icons:
-  image_path_android: "assets/immich-logo.png"
-  adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/immich-logo-android-adaptive-icon.png"
-  image_path_ios: "assets/immich-logo-w-bg.png"
-  android: "ic_launcher" # can specify file name here e.g. "ic_launcher"
+  image_path_android: 'assets/immich-logo.png'
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: 'assets/immich-logo-android-adaptive-icon.png'
+  image_path_ios: 'assets/immich-logo-w-bg.png'
+  android: 'ic_launcher' # can specify file name here e.g. "ic_launcher"
   ios: false # can specify file name here e.g. "My-Launcher-Icon
   remove_alpha_ios: true
 

@@ -30,6 +30,7 @@ class ApiService implements Authentication {
   late DownloadApi downloadApi;
   late TrashApi trashApi;
   late StacksApi stacksApi;
+  late MemoriesApi memoriesApi;
 
   ApiService() {
     final endpoint = Store.tryGet(StoreKey.serverEndpoint);
@@ -62,6 +63,7 @@ class ApiService implements Authentication {
     downloadApi = DownloadApi(_apiClient);
     trashApi = TrashApi(_apiClient);
     stacksApi = StacksApi(_apiClient);
+    memoriesApi = MemoriesApi(_apiClient);
   }
 
   Future<String> resolveAndSetEndpoint(String serverUrl) async {

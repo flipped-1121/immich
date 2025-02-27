@@ -4,6 +4,7 @@ import {
   ImageFormat,
   JobName,
   QueueName,
+  SyncEntityType,
   TranscodeTarget,
   VideoCodec,
 } from 'src/enum';
@@ -330,6 +331,10 @@ export type JobItem =
   | { name: JobName.QUEUE_DUPLICATE_DETECTION; data: IBaseJob }
   | { name: JobName.DUPLICATE_DETECTION; data: IEntityJob }
 
+  // Memories
+  | { name: JobName.MEMORIES_CLEANUP; data?: IBaseJob }
+  | { name: JobName.MEMORIES_CREATE; data?: IBaseJob }
+
   // Filesystem
   | { name: JobName.DELETE_FILES; data: IDeleteFilesJob }
 
@@ -361,7 +366,11 @@ export type JobItem =
   | { name: JobName.NOTIFY_SIGNUP; data: INotifySignupJob }
 
   // Version check
-  | { name: JobName.VERSION_CHECK; data: IBaseJob };
+  | { name: JobName.VERSION_CHECK; data: IBaseJob }
+
+  // Memories
+  | { name: JobName.MEMORIES_CLEANUP; data?: IBaseJob }
+  | { name: JobName.MEMORIES_CREATE; data?: IBaseJob };
 
 export type VectorExtension = DatabaseExtension.VECTOR | DatabaseExtension.VECTORS;
 
@@ -414,3 +423,9 @@ export interface IBulkAsset {
   addAssetIds: (id: string, assetIds: string[]) => Promise<void>;
   removeAssetIds: (id: string, assetIds: string[]) => Promise<void>;
 }
+
+export type SyncAck = {
+  type: SyncEntityType;
+  ackEpoch: string;
+  ids: string[];
+};

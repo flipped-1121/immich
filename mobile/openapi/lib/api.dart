@@ -87,6 +87,8 @@ part 'model/asset_bulk_upload_check_response_dto.dart';
 part 'model/asset_bulk_upload_check_result.dart';
 part 'model/asset_delta_sync_dto.dart';
 part 'model/asset_delta_sync_response_dto.dart';
+part 'model/asset_face_create_dto.dart';
+part 'model/asset_face_delete_dto.dart';
 part 'model/asset_face_response_dto.dart';
 part 'model/asset_face_update_dto.dart';
 part 'model/asset_face_update_item.dart';
@@ -227,6 +229,14 @@ part 'model/source_type.dart';
 part 'model/stack_create_dto.dart';
 part 'model/stack_response_dto.dart';
 part 'model/stack_update_dto.dart';
+part 'model/sync_ack_delete_dto.dart';
+part 'model/sync_ack_dto.dart';
+part 'model/sync_ack_set_dto.dart';
+part 'model/sync_entity_type.dart';
+part 'model/sync_request_type.dart';
+part 'model/sync_stream_dto.dart';
+part 'model/sync_user_delete_v1.dart';
+part 'model/sync_user_v1.dart';
 part 'model/system_config_backups_dto.dart';
 part 'model/system_config_dto.dart';
 part 'model/system_config_f_fmpeg_dto.dart';
@@ -297,6 +307,7 @@ part 'model/validate_library_response_dto.dart';
 part 'model/video_codec.dart';
 part 'model/video_container.dart';
 
+
 /// An [ApiClient] instance that uses the default values obtained from
 /// the OpenAPI specification file.
 var defaultApiClient = ApiClient();
@@ -309,5 +320,4 @@ final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
 final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-bool _isEpochMarker(String? pattern) =>
-    pattern == _dateEpochMarker || pattern == '/$_dateEpochMarker/';
+bool _isEpochMarker(String? pattern) => pattern == _dateEpochMarker || pattern == '/$_dateEpochMarker/';

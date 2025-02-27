@@ -187,6 +187,7 @@ export enum StorageFolder {
 export enum SystemMetadataKey {
   REVERSE_GEOCODING_STATE = 'reverse-geocoding-state',
   FACIAL_RECOGNITION_STATE = 'facial-recognition-state',
+  MEMORIES_STATE = 'memories-state',
   OCR_STATE = 'ocr-state',
   ADMIN_ONBOARDING = 'admin-onboarding',
   SYSTEM_CONFIG = 'system-config',
@@ -234,6 +235,8 @@ export enum ManualJobName {
   PERSON_CLEANUP = 'person-cleanup',
   TAG_CLEANUP = 'tag-cleanup',
   USER_CLEANUP = 'user-cleanup',
+  MEMORY_CLEANUP = 'memory-cleanup',
+  MEMORY_CREATE = 'memory-create',
 }
 
 export enum AssetPathType {
@@ -488,6 +491,10 @@ export enum JobName {
   CLEAN_OLD_AUDIT_LOGS = 'clean-old-audit-logs',
   CLEAN_OLD_SESSION_TOKENS = 'clean-old-session-tokens',
 
+  // memories
+  MEMORIES_CLEANUP = 'memories-cleanup',
+  MEMORIES_CREATE = 'memories-create',
+
   // smart search
   QUEUE_SMART_SEARCH = 'queue-smart-search',
   SMART_SEARCH = 'smart-search',
@@ -547,4 +554,13 @@ export enum DatabaseLock {
   Library = 1337,
   GetSystemConfig = 69,
   BackupDatabase = 42,
+}
+
+export enum SyncRequestType {
+  UsersV1 = 'UsersV1',
+}
+
+export enum SyncEntityType {
+  UserV1 = 'UserV1',
+  UserDeleteV1 = 'UserDeleteV1',
 }

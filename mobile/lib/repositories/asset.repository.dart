@@ -222,6 +222,36 @@ class AssetRepository extends DatabaseRepository implements IAssetRepository {
   Stream<Asset?> watchAsset(int id, {bool fireImmediately = false}) {
     return db.assets.watchObject(id, fireImmediately: fireImmediately);
   }
+
+  @override
+  Future<List<Asset>> getTrashAssets(int userId) {
+    return db.assets
+        .where()
+        .remoteIdIsNotNull()
+        .filter()
+        .ownerIdEqualTo(userId)
+        .isTrashedEqualTo(true)
+        .findAll();
+  }
+
+  @override
+  Future<List<Asset>> getRecentlyAddedAssets(int userId) {
+    return db.assets
+        .where()
+        .ownerIdEqualToAnyChecksum(userId)
+        .sortByFileCreatedAtDesc()
+        .findAll();
+  }
+
+  @override
+  Future<List<Asset>> getMotionAssets(int userId) {
+    return db.assets
+        .where()
+        .ownerIdEqualToAnyChecksum(userId)
+        .filter()
+        .livePhotoVideoIdIsNotNull()
+        .findAll();
+  }
 }
 
 Future<List<Asset>> _getMatchesImpl(

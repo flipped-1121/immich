@@ -31,6 +31,7 @@ import { SessionRepository } from 'src/repositories/session.repository';
 import { SharedLinkRepository } from 'src/repositories/shared-link.repository';
 import { StackRepository } from 'src/repositories/stack.repository';
 import { StorageRepository } from 'src/repositories/storage.repository';
+import { SyncRepository } from 'src/repositories/sync.repository';
 import { SystemMetadataRepository } from 'src/repositories/system-metadata.repository';
 import { TagRepository } from 'src/repositories/tag.repository';
 import { TelemetryRepository } from 'src/repositories/telemetry.repository';
@@ -73,6 +74,7 @@ export const repositories = [
   SharedLinkRepository,
   StackRepository,
   StorageRepository,
+  SyncRepository,
   SystemMetadataRepository,
   TagRepository,
   TelemetryRepository,
